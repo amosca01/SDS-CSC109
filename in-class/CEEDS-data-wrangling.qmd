@@ -1,0 +1,123 @@
+---
+title: "Intro to CEEDS Data and Data Wrangling"
+format: html
+editor: visual
+---
+
+## CEEDS Data
+
+[Center for the Environment, Ecological Design & Sustainability (CEEDS)](https://www.smith.edu/discover-smith/smith-action/sustainable-smith/center-environment-ecological-design-sustainability)
+
+From their website: "We facilitate academic and applied experiences for students that help them excel at integrating knowledge across disciplines, in support of environmental decisions and action."
+
+This semester we will focus on visualizing data collected as part of Smith's 2025 Sustainability Report. For your first visualization assignment, you will focus on survey data collected to ascertain student perspectives on sustainability.
+
+## Data Wrangling
+
+This document is meant to be a basic guide to wrangling data. You should be able to use it to get yourself started exploring the CEEDS survey data. You are not expected to already know R, if you get stuck going through this document or want to do something with the data and don't know how, ask for help!
+
+### Libraries
+
+We will need several libraries (collections of functions) to help work with data. If you do not already have them installed, you will need to install them 1st (use the "Packages" tab in R Studio to help with that).
+
+```{r}
+
+library(dplyr)
+library(readxl)
+
+```
+
+### Reading data into R
+
+STEP 1: Save excel file in same location as this file STEP 2: go to Session \> Set Working Directory \> To Source File Location STEP 3: run code below
+
+```{r}
+
+survey_df <- read_xlsx("Smith_Sustainability_2024_Sep.xlsx", sheet = "Smith_Sustainability_2024_Sep")
+q_text <- read_xlsx("Smith_Sustainability_2024_Sep.xlsx", sheet = "Q-text")
+
+```
+
+### Count instances of each response to a question
+
+```{r}
+
+# Get question text
+# TIP: reuse this code but change "Q1.1" for the question in which you are interested
+q_text %>%
+  filter(Q == "Q1.1") %>% 
+  select(Text)
+
+# Generate counts of each response to Q1.1
+survey_df %>% 
+  count(Q1.1)
+
+```
+
+### Count instances by subgroup
+
+```{r}
+
+# Get question text
+# TIP: reuse this code but change "Q1.1" for the question in which you are interested
+q_text %>%
+  filter(Q == "Q1.1") %>% 
+  select(Text)
+
+# Generate counts of each response to Q1.1 by gender
+survey_df %>% 
+  count(Q3.1...31, Q1.1)
+
+```
+
+### See all responses to a question
+
+```{r}
+
+# Get question text
+# TIP: reuse this code but change "Q1.1" for the question in which you are interested
+q_text %>%
+  filter(Q == "Q1.1b") %>% 
+  select(Text)
+
+# Generate see each response to Q1.1b
+survey_df %>% 
+  select(Q1.1b)
+
+```
+
+### Separate multiple responses to one question
+
+```{r}
+
+# Get question text
+# TIP: reuse this code but change "Q1.1" for the question in which you are interested
+q_text %>%
+  filter(Q == "Q1.3") %>% 
+  select(Text)
+
+# Generate counts of each response to Q1.3
+survey_df %>% 
+  count(Q1.3) # notice how each response is actually multiple responses
+
+# Separate responses to Q1.3 into 
+# Q1.3a, Q1.3b, Q1.3c
+q1.3_split <- survey_df %>% 
+  select(Q1.3) %>%
+  separate_wider_delim(cols = Q1.3,
+                       delim = ",",
+                       names =c("Q1.3a", "Q1.3b", "Q1.3c"),
+                       too_few = "align_start",
+                       too_many = "merge"
+                       )
+```
+
+## Your Turn!
+
+Pair up with someone who has more/less data wrangling experience than you.
+
+Discuss about what else would be interesting to look at / explore in this data set and *how* you would explore it.
+
+Try to write the code here, or use Excel or Sheets, or some other program, to get the information you want. Ask for help if you get stuck!
+
+Once you get momentum, try asking more more complex / interesting questions and answering those with the data.

@@ -10,11 +10,13 @@ editor: visual
 
 From their website: "We facilitate academic and applied experiences for students that help them excel at integrating knowledge across disciplines, in support of environmental decisions and action."
 
-This semester we will focus on visualizing data collected as part of Smith's 2025 Sustainability Report. For your first visualization assignment, you will focus on survey data collected to ascertain student perspectives on sustainability.
+This semester we will focus on visualizing data collected as part of Smith's 2025 Sustainability Report (grab a copy from the front!). For your first visualization assignment, you will focus on survey data collected to ascertain student perspectives on sustainability.
 
 ## Data Wrangling
 
 This document is meant to be a basic guide to wrangling data. You should be able to use it to get yourself started exploring the CEEDS survey data. You are not expected to already know R, if you get stuck going through this document or want to do something with the data and don't know how, ask for help!
+
+If you have never worked with R (or data) it is *highly recommended* that you pair up with someone who has experience.
 
 ### Libraries
 
@@ -23,6 +25,7 @@ We will need several libraries (collections of functions) to help work with data
 ```{r}
 
 library(dplyr)
+library(tidyr)
 library(readxl)
 
 ```
